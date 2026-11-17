@@ -35,3 +35,16 @@
 | R1 | 待測 | — | — |
 
 每案保留去識別化的測試證據，以共同流程與個別案例全數通過為準。真人是否採用開頭或拿腳本去拍，另記為使用回饋。
+
+## 部署與更新
+
+使用 Node 22+ 和 Workers Free 帳號。在自己的 Agent 安裝 [Publisher Skill](publisher/SKILL.md)，請它「用 Wskill Publisher 分享這個 Skill」。也可以從 repo 根目錄執行：
+
+```sh
+npm ci
+npx wrangler login
+npm run publish-skill -- examples/hook-writer/publish.json --deploy
+npm run publish-skill -- examples/reels-script/publish.json --deploy
+```
+
+遠端終端機可用 `npx wrangler login --device`。每個命令各自產生一個聊天網址，重跑會更新同名 Worker。將 --deploy 改成 --build 可先檢查檔案與打包。自訂文字 Skill 可複製 publish.json，指定自己的 Skill、必讀品牌與語氣檔案及獨立 Worker 名稱。頁面只在目前分頁記憶體保留對話，推論附帶最近兩輪。Reels 的開場先單獨呼叫 hook-writer，再將結果交給主模型。每次請求均受來源 IP 速率限制；免費總額由 Cloudflare 的帳號方案控制。
