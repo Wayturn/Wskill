@@ -30,8 +30,9 @@ export async function handle(req,env,bundle) {
     if (!limit.success) return json({error:'請稍候一分鐘再試'},429);
     const foundation = [bundle.brand,bundle.voice,'使用訪客的語言。遵守品牌語氣與事實。'].join('\n');
     async function run(instructions,max_tokens) {
+      const delivery = history.length > 1 && bundle.revision ? bundle.revision : bundle.delivery;
       const prepared=history.map(m=>({...m}));
-      prepared.at(-1).content += "\n\n回覆時遵守品牌語氣："+bundle.voice+"\n"+(instructions===bundle.hook ? "只提供三秒內的開場候選。" : bundle.delivery || "");
+      prepared.at(-1).content += "\n\n回覆時遵守品牌語氣："+bundle.voice+"\n"+(instructions===bundle.hook ? "只提供三秒內的開場候選。" : delivery || "");
       const result=await env.AI.run(env.MODEL,{messages:[{role:'system',content:foundation+'\n'+instructions},...prepared],temperature:0.2,max_tokens});
       if (!result?.response?.trim()) throw Error('Empty response');
       return result.response.trim();

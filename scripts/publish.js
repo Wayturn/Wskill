@@ -22,7 +22,7 @@ function loadSkill(path) {
 const skill = loadSkill(settings.skill);
 if (/Use `hook-writer`/i.test(skill) && !settings.hook) throw Error('Missing hook-writer dependency: configure hook');
 const bundle = {title:settings.title,description:settings.description,example:settings.example,
-  skill, delivery:settings.delivery || "", brand:read(settings.brand), voice:read(settings.voice),hook:settings.hook ? loadSkill(settings.hook) : null};
+  skill, revision:settings.revision || "", delivery:settings.delivery || "", brand:read(settings.brand), voice:read(settings.voice),hook:settings.hook ? loadSkill(settings.hook) : null};
 const target = resolve(root,'.build',settings.worker);
 mkdirSync(target,{recursive:true});
 cpSync(resolve(root,'public'),resolve(target,'public'),{recursive:true});
