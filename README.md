@@ -4,7 +4,7 @@
 
 ## v1 驗收規格
 
-首批必驗案例為 [hook-writer](https://github.com/social-media-skills/skills/tree/main/skills/hook-writer) 與 [reels-script](https://github.com/social-media-skills/skills/tree/main/skills/reels-script)。目前兩案皆待測。2/2 代表這兩個案例各自通過以下流程。
+首批必驗案例為 [hook-writer](https://github.com/social-media-skills/skills/tree/main/skills/hook-writer) 與 [reels-script](https://github.com/social-media-skills/skills/tree/main/skills/reels-script)。兩案皆已部署到作者帳號，公開聊天與追問已實測；帳單方案仍未獨立核實。2/2 代表這兩個案例各自通過以下流程。
 
 ### 共同測試流程
 
@@ -31,8 +31,10 @@
 
 | 案例 | 狀態 | 執行日期、版本、部署網址 | 實際輸入、輸出、追問與失敗項 |
 | --- | --- | --- | --- |
-| H1 | 待測 | — | — |
-| R1 | 待測 | — | — |
+| H1 | 正式站功能通過 | 2026-11-17 · [試用](https://wskill-hook-writer.p19970115.workers.dev) · a3f39fa0 | 三種開頭、指定縮寫、素材不足追問 |
+| R1 | 正式站功能通過 | 2026-11-17 · [試用](https://wskill-reels-script.p19970115.workers.dev) · b6d3a6f8 | 20 秒連續分鏡、單機位改寫、獨立新題材及子任務紀錄 |
+
+[正式站輸入、輸出及執行步驟](tests/evidence/2026-11-17.json)。測試使用合成素材。本次未升級方案，OAuth 無法讀取帳單訂閱以確認免費方案。
 
 每案保留去識別化的測試證據，以共同流程與個別案例全數通過為準。真人是否採用開頭或拿腳本去拍，另記為使用回饋。
 
