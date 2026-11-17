@@ -1,1 +1,11 @@
-{"worker":"wskill-reels-script","skill":"skill","hook":"../hook-writer/skill","title":"Reels 分鏡工作室","description":"把一個想法變成逐秒可拍的短片腳本。","brand":"../brand-profile.md","voice":"../voice.md","example":"寫 20 秒 IG Reels，邀人週六到市集試握兩款容量相同、握把寬度不同的手作杯。我可以入鏡和配音。"}
+{
+  "worker": "wskill-reels-script",
+  "skill": "skill",
+  "hook": "../hook-writer/skill",
+  "title": "Reels 分鏡工作室",
+  "description": "把一個想法變成逐秒可拍的短片腳本。",
+  "brand": "../brand-profile.md",
+  "voice": "../voice.md",
+  "example": "寫 20 秒 IG Reels，邀人週六到市集試握兩款容量相同、握把寬度不同的手作杯。我可以入鏡和配音。",
+  "delivery": "請依以下格式直接交付：每個分鏡一行「起秒–迄秒｜固定或移動機位與畫面｜畫面字幕｜口白｜聲音」。第一段從 0 秒起，後段起點等於前段終點，最後結束於使用者要求的時長。開頭三秒內呈現具體差異。字幕要能獨立表達差異與邀請。表後附一行「封面：」。使用單鏡位時用同一個固定鏡位，動作皆可在鏡頭前完成。遵守使用者本輪題材；品牌背景只供語氣參考，不可把無關杯子帶進不同題材。"
+}
