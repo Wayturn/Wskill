@@ -8,32 +8,36 @@
 
 | Demo | 可以做什麼 |
 | --- | --- |
-| [貼文開頭工作室](https://wskill-hook-writer.p19970115.workers.dev) | 貼上 Threads 草稿，產生三個不同切角的開頭，再指定其中一句修改。 |
-| [Reels 分鏡工作室](https://wskill-reels-script.p19970115.workers.dev) | 輸入短片主題，取得 20 秒分鏡、字幕、口白與聲音安排，再依拍攝設備調整。 |
+| [貼文開頭工作室](https://wskill-hook-writer.p19970115.workers.dev) | 貼上 Threads 草稿，取得候選方向與推薦理由。下方以介紹 agency-agents 的草稿示範。 |
+| [Reels 分鏡工作室](https://wskill-reels-script.p19970115.workers.dev) | 輸入主題與時長，產生分鏡、字幕、口白與聲音安排。下方示範全罩式耳機介紹，從約 30 秒追問縮短至約 15 秒。 |
 
-可以先試這段素材，再換成自己的內容。
-
-> 週六我會帶兩款手作杯去市集，容量相同、握把寬度不同，可以到攤位試握。
-
-Reels 的追問範例是「我只有一支手機和固定腳架，改成單鏡位，仍然 20 秒」。目前兩個 Demo 都交付文字內容，分鏡可供實際拍攝使用。
+兩個 Demo 都可以接著追問、調整文字內容。Reels 交付的是拍攝腳本。
 
 ## Demo 畫面
+
+圖片可點開查看原尺寸。
 
 ### 貼文開頭工作室
 
 貼上介紹 agency-agents 的草稿，取得三個候選方向與推薦理由。
 
-![貼文開頭工作室，輸入 agency-agents 介紹草稿](docs/images/hook-input.png)
-
-![貼文開頭工作室，回覆三個候選方向與推薦理由](docs/images/hook-output.png)
+| 輸入草稿 | 候選方向與推薦理由 |
+| --- | --- |
+| <a href="docs/images/hook-input.png"><img src="docs/images/hook-input.png" alt="貼文開頭工作室，輸入 agency-agents 介紹草稿" width="400"></a> | <a href="docs/images/hook-output.png"><img src="docs/images/hook-output.png" alt="貼文開頭工作室，回覆三個候選方向與推薦理由" width="400"></a> |
 
 ### Reels 分鏡工作室
 
-先產生約 30 秒的全罩式耳機介紹腳本，再追問縮短至約 15 秒。
+試用輸入：
 
-![Reels 分鏡工作室，產生 30 秒耳機介紹腳本](docs/images/reels-first.png)
+> 幫我規畫一份全罩式耳機的介紹腳本要30秒左右的
 
-![Reels 分鏡工作室，依追問縮短為 15 秒腳本](docs/images/reels-followup.png)
+接著追問：
+
+> 幫我縮短成15秒左右
+
+| 約 30 秒介紹腳本 | 追問縮短至約 15 秒 |
+| --- | --- |
+| <a href="docs/images/reels-first.png"><img src="docs/images/reels-first.png" alt="Reels 分鏡工作室，產生 30 秒耳機介紹腳本" width="400"></a> | <a href="docs/images/reels-followup.png"><img src="docs/images/reels-followup.png" alt="Reels 分鏡工作室，依追問縮短為 15 秒腳本" width="400"></a> |
 
 ## 發布自己的 Skill
 
