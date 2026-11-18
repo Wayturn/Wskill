@@ -17,6 +17,24 @@
 
 Reels 的追問範例是「我只有一支手機和固定腳架，改成單鏡位，仍然 20 秒」。目前兩個 Demo 都交付文字內容，分鏡可供實際拍攝使用。
 
+## Demo 畫面
+
+### 貼文開頭工作室
+
+貼上介紹 agency-agents 的草稿，取得三個候選方向與推薦理由。
+
+![貼文開頭工作室，輸入 agency-agents 介紹草稿](docs/images/hook-input.png)
+
+![貼文開頭工作室，回覆三個候選方向與推薦理由](docs/images/hook-output.png)
+
+### Reels 分鏡工作室
+
+先產生約 30 秒的全罩式耳機介紹腳本，再追問縮短至約 15 秒。
+
+![Reels 分鏡工作室，產生 30 秒耳機介紹腳本](docs/images/reels-first.png)
+
+![Reels 分鏡工作室，依追問縮短為 15 秒腳本](docs/images/reels-followup.png)
+
 ## 發布自己的 Skill
 
 準備 Node.js 22+、Git、Cloudflare 帳號，以及能讀取本機檔案和執行終端機指令的 Agent。部署使用 Cloudflare Workers 與 Workers AI，額度依你的帳號方案計算。
