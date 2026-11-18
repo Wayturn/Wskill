@@ -1,10 +1,93 @@
 # Wskill
 
-作者在自己的 Agent 裡呼叫 Publisher，把現有 Skill 部署到自己的 Cloudflare 免費帳號，取得可分享的 HTTPS 聊天網址。訪客免登入、免裝 Skill，在各自的對話裡完成作品原本的任務。
+把現有的文字 Skill 變成朋友點開就能用的聊天頁。
 
-## v1 驗收規格
+作者在自己的 Agent 裡使用 **Wskill Publisher**，部署到自己的 Cloudflare 帳號，取得可分享的 HTTPS 網址。訪客用瀏覽器輸入素材、接著追問，免登入、免安裝 Skill。
 
-首批必驗案例為 [hook-writer](https://github.com/social-media-skills/skills/tree/main/skills/hook-writer) 與 [reels-script](https://github.com/social-media-skills/skills/tree/main/skills/reels-script)。兩案皆已部署到作者帳號，公開聊天與追問已實測；帳單方案仍未獨立核實。2/2 代表這兩個案例各自通過以下流程。
+## 試用 Demo
+
+| Demo | 可以做什麼 |
+| --- | --- |
+| [貼文開頭工作室](https://wskill-hook-writer.p19970115.workers.dev) | 貼上 Threads 草稿，產生三個不同切角的開頭，再指定其中一句修改。 |
+| [Reels 分鏡工作室](https://wskill-reels-script.p19970115.workers.dev) | 輸入短片主題，取得 20 秒分鏡、字幕、口白與聲音安排，再依拍攝設備調整。 |
+
+可以先試這段素材，再換成自己的內容。
+
+> 週六我會帶兩款手作杯去市集，容量相同、握把寬度不同，可以到攤位試握。
+
+Reels 的追問範例是「我只有一支手機和固定腳架，改成單鏡位，仍然 20 秒」。目前兩個 Demo 都交付文字內容，分鏡可供實際拍攝使用。
+
+## 發布自己的 Skill
+
+準備 Node.js 22+、Git、Cloudflare 帳號，以及能讀取本機檔案和執行終端機指令的 Agent。部署使用 Cloudflare Workers 與 Workers AI，額度依你的帳號方案計算。
+
+### 1. 取得 Publisher
+
+將專案下載到本機。
+
+```sh
+git clone https://github.com/Wayturn/Wskill.git
+cd Wskill
+npm ci
+```
+
+[Publisher 的指令檔](publisher/SKILL.md) 位於 `publisher/SKILL.md`。在你的 Agent 裡貼上以下要求，將路徑換成實際位置。
+
+> 請讀取 /你的路徑/Wskill/publisher/SKILL.md，依照 Wskill Publisher 的流程，把 /你的路徑/my-skill 部署到我的 Cloudflare，給我可分享的聊天網址。請先檢查依賴，完成後回報部署結果、實際範例回覆與尚未通過的驗收。
+
+也可以依所用 Agent 的 Skill 安裝方式加入此指令檔。各 Agent 的安裝位置不同，直接提供完整路徑即可讓 Agent 讀取流程。
+
+### 2. 準備發布設定
+
+Agent 會參照 [hook-writer 設定](examples/hook-writer/publish.json)，在你的 Skill 附近建立 `publish.json`。設定包括 Skill 路徑、品牌與語氣檔、頁面標題、範例輸入，以及獨立且固定的 Worker 名稱。
+
+- `skill` 指向含有 `SKILL.md` 的資料夾。
+- `brand`、`voice` 指向品牌與語氣 Markdown 檔，目前發布流程需要這兩個檔案。
+- 檔案路徑以 `publish.json` 所在位置為基準。
+- 只打包適合公開使用的內容，並保留 Skill 所需的參考檔與來源授權。
+- 更新時沿用同一 Worker 名稱，即可更新同一網址。
+
+Publisher 會先檢查與打包，首次需要時引導你在 Cloudflare 完成授權，再部署及試跑。
+
+### 3. 確認分享結果
+
+發布完成後，確認拿到聊天網址、首輪實際回覆、追問結果，以及新訪客從空白對話開始的驗證結果。部署成功與 Skill 試跑結果應分別回報，未通過項目需附原因。
+
+## 手動部署與開發
+
+在 Wskill 專案根目錄執行，以下命令會將兩個範例各自部署成一個聊天頁。
+
+```sh
+npm ci
+npx wrangler login
+npm run publish-skill -- examples/hook-writer/publish.json --deploy
+npm run publish-skill -- examples/reels-script/publish.json --deploy
+```
+
+遠端終端機可使用 `npx wrangler login --device`。自訂 Skill 可傳入自己設定檔的絕對路徑。
+
+```sh
+npm run publish-skill -- /absolute/path/to/publish.json --build
+npm run publish-skill -- /absolute/path/to/publish.json --deploy
+```
+
+`--build` 會檢查檔案並執行 Wrangler dry run。開發測試可執行 `npm test`。
+
+## 目前支援與限制
+
+- 已實測文字輸入、文字輸出、追問，以及兩個內建 Demo。圖片、音訊與影片成品尚未驗收。
+- 發布器會打包 Skill 指令及其中符合 `references/*.md` 路徑格式的參考檔。其他腳本、外部服務與媒體需求需要另行確認相容性。
+- Reels 的開場會先單獨呼叫 hook-writer，再將結果交給主模型。目前跨 Skill 流程支援這個特定子任務。
+- 對話只保留在目前分頁的記憶體，重新整理會清空。推論附帶最近兩輪內容。
+- 每次請求受來源 IP 速率限制，Workers AI 用量受 Cloudflare 帳號額度限制。2026-11-17 部署過程未升級方案，帳號是否為免費方案尚未獨立核實。
+- 2026-11-17 首輪正式站測試已保存。後續補拍截圖時，hook-writer 雖符合 20 字限制並保留「試握」，改寫卻更接近第三個候選，對指定第二句的修改只能算部分通過。模型輸出仍需人工核對。
+
+## 測試與驗收
+
+[2026-11-17 正式站測試紀錄](tests/evidence/2026-11-17.json) 包含實際輸入、輸出與執行步驟。測試使用合成品牌素材；真實使用者是否採用內容仍待驗證。下方結果表保留首輪紀錄，後續重測限制以上方說明為準。
+
+<details>
+<summary>展開 H1 / R1 完整驗收規格與首輪結果</summary>
 
 ### 共同測試流程
 
@@ -38,15 +121,14 @@
 
 每案保留去識別化的測試證據，以共同流程與個別案例全數通過為準。真人是否採用開頭或拿腳本去拍，另記為使用回饋。
 
-## 部署與更新
+</details>
 
-使用 Node 22+ 和 Workers Free 帳號。在自己的 Agent 安裝 [Publisher Skill](publisher/SKILL.md)，請它「用 Wskill Publisher 分享這個 Skill」。也可以從 repo 根目錄執行：
+## 來源與授權
 
-```sh
-npm ci
-npx wrangler login
-npm run publish-skill -- examples/hook-writer/publish.json --deploy
-npm run publish-skill -- examples/reels-script/publish.json --deploy
-```
+Wskill 採用 [MIT License](LICENSE)。
 
-遠端終端機可用 `npx wrangler login --device`。每個命令各自產生一個聊天網址，重跑會更新同名 Worker。將 --deploy 改成 --build 可先檢查檔案與打包。自訂文字 Skill 可複製 publish.json，指定自己的 Skill、必讀品牌與語氣檔案及獨立 Worker 名稱。頁面只在目前分頁記憶體保留對話，推論附帶最近兩輪。Reels 的開場先單獨呼叫 hook-writer，再將結果交給主模型。每次請求均受來源 IP 速率限制；免費總額由 Cloudflare 的帳號方案控制。
+兩個 Demo 改編自 [social-media-skills/skills](https://github.com/social-media-skills/skills) 的 [hook-writer](https://github.com/social-media-skills/skills/tree/main/skills/hook-writer) 與 [reels-script](https://github.com/social-media-skills/skills/tree/main/skills/reels-script)。Wskill 加上訪客聊天頁、發布設定、示範品牌語氣及輸出格式要求。第三方內容依其隨附授權使用，重用時請保留來源與授權聲明。
+
+## 回饋
+
+歡迎透過 [Issues](https://github.com/Wayturn/Wskill/issues) 回報問題。請附上操作步驟、預期與實際結果，並移除憑證及私人素材。
